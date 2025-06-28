@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><link rel="stylesheet" href="index.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shadow Viper</title>
+
+</head >
+
+
+
+<body>
+ 
+ 
+
+  
+ 
+ 
+  <audio id="ambient" src="[Horror Music No Copyright]Horror Background Music No Copyright - Non Copyrighted Scary Music.mp3" autoplay loop></audio>
+
+<script>const ambient = document.getElementById('ambient');
+ambient.volume = 0.2;</script>
+
+
+
+<div id="intro-screen">
+  <p id="intro-text">Accessing shadow net<span id="dots"></span></p>
+</div>
+
+  
+
+ <canvas id="matrixCanvas"></canvas>
+
+<div class="matrix-overlay"></div>
+<img src="snk.gif" alt="Snake GIF" class="snake-overlay" />
+</div>
+
+  <script>
+    const canvas = document.getElementById("matrixCanvas");
+    const ctx = canvas.getContext("2d");
+
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+    const letters = "アカサタナハマヤラワ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+
+    const drops = Array(Math.floor(columns)).fill(1);
+
+    function draw() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#00ff00";
+      ctx.font = fontSize + "px monospace";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+
+        drops[i]++;
+      }
+    }
+
+    setInterval(draw, 35);
+
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+
+  <script>let dots = '';
+const dotEl = document.getElementById('dots');
+const dotInterval = setInterval(() => {
+  dots = dots.length < 3 ? dots + '.' : '';
+  dotEl.innerText = dots;
+}, 500);
+
+setTimeout(() => {
+  clearInterval(dotInterval);
+  document.getElementById('intro-screen').style.display = 'none';
+}, 4000);</script>
+
+<script>
+  const menuIcon = document.getElementById('menu-icon');
+  const navbar = document.getElementById('navbar');
+
+  menuIcon.addEventListener('click', () => {
+    navbar.classList.toggle('active');
+  });
+</script>
+
+<script>
+document.getElementById('menuIcon').onclick = function() {
+  document.getElementById('mainNav').classList.toggle('show');
+};
+// Nav link e click korle menu auto close
+document.querySelectorAll('#mainNav a').forEach(link => {
+  link.onclick = () => document.getElementById('mainNav').classList.remove('show');
+});
+</script>
+
+
+
+
+  
+  <header>
+    <div class="logo"><img src="logo.png" alt=""></div>
+    <nav id="mainNav">
+      <a href="#about">About</a>
+      <a href="#service">Services</a>
+      <a href="#contact">Contact</a>
+    </nav>
+      
+      <div class="menu-icon hidden" id="menuIcon">&#9776;</div>
+      
+
+  </header>
+
+  <main class="hero">
+    <h1 class="line1">hacking Services by</h1>
+    <h1 class="line2">Muthmain Rahman</h1>
+    <h2 class="line3">The Viper</h2>
+    <p class="slogan">I don’t need your permission to protect what you failed to secure.<br><strong>Never even mess with the shadow of Viper</strong></p>
+  </main>
+<!-- বাটন -->
+<button id="dontClickBtn">[ DON'T CLICK ]</button>
+
+<!-- ওয়ার্নিং দেখাবে এখানে -->
+<div id="warning-message"></div>
+
+<!-- সাইরেন -->
+<audio id="siren" src="warning.mp3"></audio>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('dontClickBtn');
+    const warning = document.getElementById('warning-message');
+    const siren = document.getElementById('siren');
+
+    btn.addEventListener('click', () => {
+      document.body.classList.add('danger');
+      siren.volume = 1;
+      siren.loop = true;
+      siren.play();
+
+      warning.textContent = "That was your mistake… Don't be too late to escape.";
+      warning.style.display = 'block';
+    });
+  });
+</script>
+
+<script>
+// filepath: h:\My Drive\fail\fail.html
+
+document.getElementById('dontClickBtn').addEventListener('click', function() {
+  // Sob visible element select koro (body er shontan chara script, style, audio, canvas, etc. bad)
+  const chaosElements = Array.from(document.body.querySelectorAll('*'))
+    .filter(el => !['SCRIPT','STYLE','AUDIO','CANVAS'].includes(el.tagName) && el.id !== 'dontClickBtn');
+
+  chaosElements.forEach(el => {
+    el.style.transition = 'all 0.3s cubic-bezier(.25,2,.5,.8)';
+    // Random position, rotation, scale, skew
+    const randX = Math.random() * 200 - 100; // -100px to +100px
+    const randY = Math.random() * 200 - 100;
+    const randRot = Math.random() * 720 - 360; // -360deg to +360deg
+    const randScale = 0.5 + Math.random() * 1.5; // 0.5x to 2x
+    const randSkew = Math.random() * 60 - 30; // -30deg to +30deg
+
+    el.style.transform = `
+      translate(${randX}px, ${randY}px)
+      rotate(${randRot}deg)
+      scale(${randScale})
+      skew(${randSkew}deg, ${randSkew}deg)
+    `;
+    el.style.filter = `blur(${Math.random()*2}px) contrast(${0.5 + Math.random()*1.5})`;
+  });
+
+  // Repeat every 400ms for continuous chaos
+  if (!window.chaosInterval) {
+    window.chaosInterval = setInterval(() => {
+      chaosElements.forEach(el => {
+        const randX = Math.random() * 200 - 100;
+        const randY = Math.random() * 200 - 100;
+        const randRot = Math.random() * 720 - 360;
+        const randScale = 0.5 + Math.random() * 1.5;
+        const randSkew = Math.random() * 60 - 30;
+        el.style.transform = `
+          translate(${randX}px, ${randY}px)
+          rotate(${randRot}deg)
+          scale(${randScale})
+          skew(${randSkew}deg, ${randSkew}deg)
+        `;
+        el.style.filter = `blur(${Math.random()*2}px) contrast(${0.5 + Math.random()*1.5})`;
+      });
+    }, 400);
+  }
+});
+</script>
+
+
+<script>
+// filepath: h:\My Drive\fail\fail.html
+
+document.getElementById('dontClickBtn').addEventListener('click', function() {
+  // Nijer image path gula ekhane din
+  const imgUrls = [
+    'img1.jpg',
+    'img2.jpg',
+    'img3.jpg'
+    // aro image path add korte paren
+  ];
+
+  // 3 ta random image add hobe
+  for (let i = 0; i < 3; i++) {
+    const img = document.createElement('img');
+    img.src = imgUrls[Math.floor(Math.random() * imgUrls.length)];
+    img.className = 'chaos-img';
+    img.style.position = 'fixed';
+    img.style.top = Math.random() * 80 + 10 + '%';
+    img.style.left = Math.random() * 80 + 10 + '%';
+    img.style.width = '120px';
+    img.style.zIndex = 99999;
+    img.style.pointerEvents = 'none';
+    document.body.appendChild(img);
+  }
+});
+</script>
+
+<script>document.getElementById('dontClickBtn').addEventListener('click', function() {
+  this.textContent = "You clicked!";
+  // ...baki chaos code...
+});</script>
+<script>setTimeout(() => {
+  clearInterval(dotInterval);
+  document.getElementById('intro-screen').style.display = 'none';
+  document.getElementById('menuIcon').classList.remove('hidden');
+}, 4000);</script>
+
+
+ <section id="about">
+  <h2>About me</h2>
+  <p>
+I wasn’t born in the dark. I chose it.
+While others played games, I was breaking systems — not to destroy, but to learn how the world really works. I’ve built myself line by line, code by code. I don’t follow rules... I rewrite them. I’m the guy who talks less and observes more, the one who smiles when the firewall crashes. Shadow Viper is not just a name—it’s a mindset. I don’t need fame. I need control. While the world sleeps, I sharpen my skills. I’m not here to impress you.
+I’m here to leave a trace… inside your system.
+  </p>
+</section>
+        
+
+
+
+
+
+
+      <section id="service">
+  <h2>Services</h2>
+  <p>
+   I’m the one who finds vulnerabilities not to destroy, but to protect. No bug, no flaw in a website’s code can escape my eyes. I analyze every inch of the system, prevent scams before they trap anyone, and once I identify a fake, it never tricks anyone again. If someone wants to erase their digital shadow, I make them disappear from the internet like a ghost. Shadow Viper doesn’t just provide security—he creates fear. I am the shadow you never see… but you always feel. 
+  </p>
+</section>
+
+
+
+
+        <section class="Warning">
+  <h2>Warning</h2>
+  <p>
+Unauthorized Access Will Be Traced  
+You Are Being Watched  
+This Is Not A Joke...  
+— Shadow Viper
+  </p>
+</section>
+
+<footer>
+  <h2 id="contact">Contact Details</h2>
+  <p>Email: shuvoxe98@gmail.com
+</p>
+
+  <p>GitHub: github.com/shadowviper</p>
+
+  <div class="copyright">
+  &copy; 2025 Shadow Viper. All rights reserved. Unauthorized use or duplication is strictly prohibited.
+</div>
+</footer>
+
+
+  <script>
+document.getElementById('menuIcon').onclick = function() {
+  document.getElementById('mainNav').classList.toggle('show');
+};
+// Nav link e click korle menu auto close
+document.querySelectorAll('#mainNav a').forEach(link => {
+  link.onclick = () => document.getElementById('mainNav').classList.remove('show');
+});
+</script>
+
+sc
+</body>
+</html>
